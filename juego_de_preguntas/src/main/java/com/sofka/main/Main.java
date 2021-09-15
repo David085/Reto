@@ -5,8 +5,10 @@ import java.util.Scanner;
 
 
 
-public class NewMain {
+public class Main {
 
+    public static int puntos = 0;
+    
     public static void main(String[] args) {
                
         Scanner menu = new Scanner(System.in);
@@ -34,13 +36,16 @@ public class NewMain {
             if (respuesta_menu != 's' && respuesta_menu != 'n') {  
                 System.out.println("Respuesta incorrecta");
                 System.exit(0);
-            } 
+            } else if  (respuesta_menu == 'n'){
+                System.out.println("Suerte");
+                System.exit(0);
+            }
             
             while(jugando){
                 switch(ronda){
                     case 1:
                         PreguntasRonda1 ronda1 = new PreguntasRonda1();
-                        ronda1.ejecutar();
+                        jugando = ronda1.ejecutar();
                 }
             }
             
