@@ -99,6 +99,7 @@ public class Main {
             // Se imprime los datos del usuario anterior que se leen al inicio del try
             System.out.println("El ultimo puntaje fue de " + usuarioRecuperado.getNombre() + " con: "
                     + usuarioRecuperado.getPuntos() + " puntos");
+            
         } catch (Exception e) {
 
             System.out.println("Error al ejecutar el programa");
