@@ -6,7 +6,11 @@ import com.sofka.preguntas.PreguntasRonda3;
 import com.sofka.preguntas.PreguntasRonda4;
 import com.sofka.preguntas.PreguntasRonda5;
 import com.sofka.usuario.Usuario;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
@@ -14,7 +18,7 @@ public class Main {
 
     public static int puntos = 0, ronda = 1;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
 
         String nombre_user = "";
         Scanner menu = new Scanner(System.in);
@@ -36,6 +40,12 @@ public class Main {
 
         try {
 
+            //Aqui se leen los datos del ppuntaje anterior que se imprimen al final
+            ObjectInputStream leerDatos = new ObjectInputStream(new FileInputStream("/home/david/Escritorio/Usuario.txt"));
+            Usuario usuarioRecuperado = (Usuario) leerDatos.readObject();
+            leerDatos.close();
+
+            // Aqui tomamos la respuesta del usuario si esta listo o no
             respuesta_menu = menu.next().toLowerCase().charAt(0); // toma el primer caracter de un string y lo convierte en minuscula           
 
             if (respuesta_menu != 's' && respuesta_menu != 'n') {
@@ -48,42 +58,47 @@ public class Main {
 
             System.out.println("\nCuál es tu nombre?");
             nombre_user = menu.next();
-            Usuario usuario = new Usuario(nombre_user, puntos);
 
             while (jugando) {
 
                 switch (ronda) {
-                    case 1:
+                    case 1 -> {
                         PreguntasRonda1 ronda1 = new PreguntasRonda1();
                         jugando = ronda1.ejecutar();
-                        break;
-                    case 2:
+                    }
+                    case 2 -> {
                         PreguntasRonda2 ronda2 = new PreguntasRonda2();
                         jugando = ronda2.ejecutar();
-                        break;
-                    case 3:
+                    }
+                    case 3 -> {
                         PreguntasRonda3 ronda3 = new PreguntasRonda3();
                         jugando = ronda3.ejecutar();
-                        break;
-                    case 4:
+                    }
+                    case 4 -> {
                         PreguntasRonda4 ronda4 = new PreguntasRonda4();
                         jugando = ronda4.ejecutar();
-                        break;
-                    case 5:
+                    }
+                    case 5 -> {
                         PreguntasRonda5 ronda5 = new PreguntasRonda5();
                         jugando = ronda5.ejecutar();
-                        break;
-                    default:
+                    }
+                    default ->
                         jugando = false;
-                        break;
                 }
 
             }
-            System.out.println(puntos);
+            
+            System.out.println("Juego termidado, puntaje final: " + puntos + "\n\n\n");
+            Usuario usuario = new Usuario(nombre_user, puntos);
+            
+            //Creamos un flijo de datos para guardar el objeto usuario en el escritorio
             ObjectOutputStream escribirDatos = new ObjectOutputStream(new FileOutputStream("/home/david/Escritorio/Usuario.txt"));
             escribirDatos.writeObject(usuario);
             escribirDatos.close();
 
+            // Se imprime los datos del usuario anterior que se leen al inicio del try
+            System.out.println("El ultimo puntaje fue de " + usuarioRecuperado.getNombre() + " con: "
+                    + usuarioRecuperado.getPuntos() + " puntos");
         } catch (Exception e) {
 
             System.out.println("Error al ejecutar el programa");
