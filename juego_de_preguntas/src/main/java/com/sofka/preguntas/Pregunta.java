@@ -55,6 +55,9 @@ public class Pregunta {
                     Main.puntos += 10;
                     Main.ronda++;
                     return true;
+                } else if(respuesta == 'e'){
+                    System.out.println("Adiós");
+                    return false;
                 } else {
                     System.out.println("Respuesta incorrecta, game over\n");
                     return false;
@@ -63,10 +66,13 @@ public class Pregunta {
 
             case 2 -> {
                 if (respuesta == respuesta2) {
-                    System.out.println("Respuesta correcta. +10 puntos\n");
-                    Main.puntos += 10;
+                    System.out.println("Respuesta correcta. +20 puntos\n");
+                    Main.puntos += 20;
                     Main.ronda++;
                     return true;
+                } else if(respuesta == 'e'){
+                    System.out.println("Adiós");
+                    return false;
                 } else {
                     System.out.println("Respuesta incorrecta, game over\n");
                     return false;
@@ -75,10 +81,13 @@ public class Pregunta {
 
             case 3 -> {
                 if (respuesta == respuesta3) {
-                    System.out.println("Respuesta correcta. +10 puntos\n");
-                    Main.puntos += 10;
+                    System.out.println("Respuesta correcta. +30 puntos\n");
+                    Main.puntos += 30;
                     Main.ronda++;
                     return true;
+                } else if(respuesta == 'e'){
+                    System.out.println("Adiós");
+                    return false;
                 } else {
                     System.out.println("Respuesta incorrecta, game over\n");
                     return false;
@@ -87,10 +96,13 @@ public class Pregunta {
 
             case 4 -> {
                 if (respuesta == respuesta4) {
-                    System.out.println("Respuesta correcta. +10 puntos\n");
-                    Main.puntos += 10;
+                    System.out.println("Respuesta correcta. +40 puntos\n");
+                    Main.puntos += 40;
                     Main.ronda++;
                     return true;
+                } else if(respuesta == 'e'){
+                    System.out.println("Adiós");
+                    return false;
                 } else {
                     System.out.println("Respuesta incorrecta, game over\n");
                     return false;
@@ -99,10 +111,13 @@ public class Pregunta {
 
             case 5 -> {
                 if (respuesta == respuesta5) {
-                    System.out.println("Respuesta correcta. +10 puntos\n");
-                    Main.puntos += 10;
+                    System.out.println("Respuesta correcta. +50 puntos\n");
+                    Main.puntos += 50;
                     Main.ronda++;
                     return true;
+                } else if(respuesta == 'e'){
+                    System.out.println("Adiós");
+                    return false;
                 } else {
                     System.out.println("Respuesta incorrecta, game over\n");
                     return false;

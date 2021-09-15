@@ -21,16 +21,13 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
 
         //Declaramos las variables y objetos
-        
         String nombre_user = "";
         Scanner menu = new Scanner(System.in);
         char respuesta_menu; // variable para tomar las respuestas que se dan en el menu
         boolean jugando = true; // variable para saver si el user sale de la partida
         Usuario usuarioRecuperado = new Usuario(null, 0); //Objeto para guardar el usuario de la ultima partida
         Usuario usuario = new Usuario(nombre_user, puntos); // objeto para guardar los datos de la partida actual
-        
-        
-        
+
         System.out.println("-------------------------------------");
         System.out.println("-   ¿Cuánto sabes sobre geografía   -?");
         System.out.println("-------------------------------------");
@@ -38,8 +35,10 @@ public class Main {
                 + "las capitales de diferentes paises del mundo. Son 5 rondas \n"
                 + "en donde saldŕa una pregunta con un pais aleatorio y tendrás\n"
                 + "que elegir su capital correcta, si aciertas, ganarás puntos\n"
-                + "y pasarás a la siguiente ronda; si fallas, se acabará el juego\n"
+                + "y pasarás a la siguiente ronda; si fallas, se acabará el juego.\n"
                 + "con los puntos que tengas en ese momento.\n\n"
+                + "Cada ronda va aumentando la dificultad ya que los paises serán\n"
+                + "mas desconocidos."
                 + "Siempre que quieras finalizar el juego solo presiona la "
                 + "tecla 'e'");
         System.out.println("¿Estás listo?\n'S' = si\n'N' = no");
@@ -49,7 +48,7 @@ public class Main {
             ObjectInputStream leerDatos = new ObjectInputStream(new FileInputStream("/home/david/Escritorio/Usuario.txt"));
             usuarioRecuperado = (Usuario) leerDatos.readObject();
             leerDatos.close();
-        } catch (Exception e) { 
+        } catch (Exception e) {
             //si no encuentra datos, sigue la partida sin mostrar nada
         }
 
@@ -97,7 +96,7 @@ public class Main {
                         jugando = false;
 
                 } // fin switch
-                
+
             } // fin while
 
             System.out.println("Juego termidado, puntaje final: " + puntos + "\n\n\n");
@@ -109,11 +108,11 @@ public class Main {
         } // fin try-catch principal
 
         try {
-            
+
             //guardamos los datos de esta partida en el objeto usuario
             usuario.setNombre(nombre_user);
             usuario.setPuntos(puntos);
-            
+
             //Creamos un flujo de datos para guardar el objeto usuario en el escritorio
             ObjectOutputStream escribirDatos = new ObjectOutputStream(new FileOutputStream("/home/david/Escritorio/Usuario.txt"));
             escribirDatos.writeObject(usuario);
