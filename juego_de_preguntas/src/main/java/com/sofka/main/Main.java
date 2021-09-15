@@ -2,24 +2,25 @@ package com.sofka.main;
 
 import com.sofka.preguntas.PreguntasRonda1;
 import com.sofka.preguntas.PreguntasRonda2;
+import com.sofka.preguntas.PreguntasRonda3;
+import com.sofka.preguntas.PreguntasRonda4;
+import com.sofka.preguntas.PreguntasRonda5;
 import com.sofka.usuario.Usuario;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
-
-
 public class Main {
 
     public static int puntos = 0, ronda = 1;
-    
+
     public static void main(String[] args) {
-        
+
         String nombre_user = "";
         Scanner menu = new Scanner(System.in);
         char respuesta_menu; // variable para tomar las respuestas que se dan en el menu
         boolean jugando = true; // variable para saver si el user sale de la partida
-        
+
         System.out.println("-------------------------------------");
         System.out.println("-   ¿Cuánto sabes sobre geografía   -?");
         System.out.println("-------------------------------------");
@@ -32,26 +33,26 @@ public class Main {
                 + "Siempre que quieras finalizar el juego solo presiona la "
                 + "tecla 's'");
         System.out.println("¿Estás listo?\n'S' = si\n'N' = no");
-        
+
         try {
-            
+
             respuesta_menu = menu.next().toLowerCase().charAt(0); // toma el primer caracter de un string y lo convierte en minuscula           
-            
-            if (respuesta_menu != 's' && respuesta_menu != 'n') {  
+
+            if (respuesta_menu != 's' && respuesta_menu != 'n') {
                 System.out.println("Respuesta incorrecta");
                 System.exit(0);
-            } else if  (respuesta_menu == 'n'){
+            } else if (respuesta_menu == 'n') {
                 System.out.println("Suerte");
                 System.exit(0);
             }
-            
+
             System.out.println("\nCuál es tu nombre?");
             nombre_user = menu.next();
             Usuario usuario = new Usuario(nombre_user, puntos);
-            
-            while(jugando){
-                
-                switch(ronda){
+
+            while (jugando) {
+
+                switch (ronda) {
                     case 1:
                         PreguntasRonda1 ronda1 = new PreguntasRonda1();
                         jugando = ronda1.ejecutar();
@@ -60,23 +61,35 @@ public class Main {
                         PreguntasRonda2 ronda2 = new PreguntasRonda2();
                         jugando = ronda2.ejecutar();
                         break;
+                    case 3:
+                        PreguntasRonda3 ronda3 = new PreguntasRonda3();
+                        jugando = ronda3.ejecutar();
+                        break;
+                    case 4:
+                        PreguntasRonda4 ronda4 = new PreguntasRonda4();
+                        jugando = ronda4.ejecutar();
+                        break;
+                    case 5:
+                        PreguntasRonda5 ronda5 = new PreguntasRonda5();
+                        jugando = ronda5.ejecutar();
+                        break;
                     default:
                         jugando = false;
                         break;
                 }
-                
+
             }
             System.out.println(puntos);
             ObjectOutputStream escribirDatos = new ObjectOutputStream(new FileOutputStream("/home/david/Escritorio/Usuario.txt"));
             escribirDatos.writeObject(usuario);
             escribirDatos.close();
-            
+
         } catch (Exception e) {
-            
+
             System.out.println("Error al ejecutar el programa");
-            
+
         } // fin try-catch
-       
+
     } //Fin main
-    
+
 } // fin clase
