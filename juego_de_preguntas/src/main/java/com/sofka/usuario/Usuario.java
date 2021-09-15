@@ -22,4 +22,12 @@ public class Usuario implements Serializable{
         return puntos;
     }
     
+    public void setNombre(String n){
+        nombre = n;
+    }
+    
+    public void setPuntos(int p){
+        puntos = p;
+    }
+    
 } // fin clase

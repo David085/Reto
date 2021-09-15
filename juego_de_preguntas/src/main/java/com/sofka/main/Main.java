@@ -20,11 +20,17 @@ public class Main {
 
     public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
 
+        //Declaramos las variables y objetos
+        
         String nombre_user = "";
         Scanner menu = new Scanner(System.in);
         char respuesta_menu; // variable para tomar las respuestas que se dan en el menu
         boolean jugando = true; // variable para saver si el user sale de la partida
-
+        Usuario usuarioRecuperado = new Usuario(null, 0); //Objeto para guardar el usuario de la ultima partida
+        Usuario usuario = new Usuario(nombre_user, puntos); // objeto para guardar los datos de la partida actual
+        
+        
+        
         System.out.println("-------------------------------------");
         System.out.println("-   ¿Cuánto sabes sobre geografía   -?");
         System.out.println("-------------------------------------");
@@ -35,15 +41,19 @@ public class Main {
                 + "y pasarás a la siguiente ronda; si fallas, se acabará el juego\n"
                 + "con los puntos que tengas en ese momento.\n\n"
                 + "Siempre que quieras finalizar el juego solo presiona la "
-                + "tecla 's'");
+                + "tecla 'e'");
         System.out.println("¿Estás listo?\n'S' = si\n'N' = no");
 
         try {
-
-            //Aqui se leen los datos del ppuntaje anterior que se imprimen al final
+            //Aqui se leen los datos del puntaje anterior que se imprimen al final
             ObjectInputStream leerDatos = new ObjectInputStream(new FileInputStream("/home/david/Escritorio/Usuario.txt"));
-            Usuario usuarioRecuperado = (Usuario) leerDatos.readObject();
+            usuarioRecuperado = (Usuario) leerDatos.readObject();
             leerDatos.close();
+        } catch (Exception e) { 
+            //si no encuentra datos, sigue la partida sin mostrar nada
+        }
+
+        try {
 
             // Aqui tomamos la respuesta del usuario si esta listo o no
             respuesta_menu = menu.next().toLowerCase().charAt(0); // toma el primer caracter de un string y lo convierte en minuscula           
@@ -51,7 +61,7 @@ public class Main {
             if (respuesta_menu != 's' && respuesta_menu != 'n') {
                 System.out.println("Respuesta incorrecta");
                 System.exit(0);
-            } else if (respuesta_menu == 'n') {
+            } else if (respuesta_menu == 'n' || respuesta_menu == 'e') {
                 System.out.println("Suerte");
                 System.exit(0);
             }
@@ -62,6 +72,7 @@ public class Main {
             while (jugando) {
 
                 switch (ronda) {
+
                     case 1 -> {
                         PreguntasRonda1 ronda1 = new PreguntasRonda1();
                         jugando = ronda1.ejecutar();
@@ -84,27 +95,35 @@ public class Main {
                     }
                     default ->
                         jugando = false;
-                }
 
-            }
-            
+                } // fin switch
+                
+            } // fin while
+
             System.out.println("Juego termidado, puntaje final: " + puntos + "\n\n\n");
-            Usuario usuario = new Usuario(nombre_user, puntos);
+
+        } catch (Exception e) {
+
+            System.out.println("Error al ejecutar el programa");
+
+        } // fin try-catch principal
+
+        try {
             
-            //Creamos un flijo de datos para guardar el objeto usuario en el escritorio
+            //guardamos los datos de esta partida en el objeto usuario
+            usuario.setNombre(nombre_user);
+            usuario.setPuntos(puntos);
+            
+            //Creamos un flujo de datos para guardar el objeto usuario en el escritorio
             ObjectOutputStream escribirDatos = new ObjectOutputStream(new FileOutputStream("/home/david/Escritorio/Usuario.txt"));
             escribirDatos.writeObject(usuario);
             escribirDatos.close();
 
             // Se imprime los datos del usuario anterior que se leen al inicio del try
-            System.out.println("El ultimo puntaje fue de " + usuarioRecuperado.getNombre() + " con: "
+            System.out.println("El ultimo puntaje fue de " + usuarioRecuperado.getNombre() + " con "
                     + usuarioRecuperado.getPuntos() + " puntos");
-            
         } catch (Exception e) {
-
-            System.out.println("Error al ejecutar el programa");
-
-        } // fin try-catch
+        }
 
     } //Fin main
 
